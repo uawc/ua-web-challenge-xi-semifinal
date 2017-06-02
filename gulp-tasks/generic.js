@@ -1,10 +1,10 @@
 "use strict";
 
-let gulp = require('gulp');
-let plumber = require('gulp-plumber');
+var gulp = require('gulp');
+var plumber = require('gulp-plumber');
 
-const SERVER_SRC = 'src/server/**/*';
-const DEPS_LIST = [
+var SERVER_SRC = 'src/server/**/*';
+var DEPS_LIST = [
 	'node_modules/@angular/*/bundles/*.js',
 	'node_modules/rxjs/**/*.js',
 	'node_modules/core-js/client/shim.min.js',
@@ -17,7 +17,7 @@ const DEPS_LIST = [
 /**
  * Copies vendors that are being required in runtime.
  */
-gulp.task('dependecies', () => {
+gulp.task('dependecies', function() {
 	return gulp.src(DEPS_LIST, { base: 'node_modules' })
 		.pipe(gulp.dest('app/lib'));
 });

@@ -1,0 +1,20 @@
+<div [ngClass]="['menu-inner']">
+
+	<ul [ngClass]="['navigation-tabs']">
+		<li *ngFor="let tab of tabs"
+		    [class.active]="tab === currentTab"
+		    (click)="onTabChange(tab)">
+			{{tab.title}}
+		</li>
+	</ul>
+
+	<ul [ngClass]="['navigation-buttons']">
+		<li [ngClass]="['add-event']" (click)="onAddEventClick()">+</li>
+		<li (click)="onPrevDateClick()"><</li>
+		<li (click)="onCurrentDateClick()">Today</li>
+		<li (click)="onNextDateClick()">></li>
+	</ul>
+
+</div>
+
+<div [ngClass]="['clear']"></div>

@@ -1,1 +1,13 @@
-<p>Hello World</p>
+<title></title>
+
+<menu [currentTab]="currentTab"
+      (tabChange)="onTabChange($event)"
+      (toggleEditEventMenu)="onToggleEditEventMenu()">
+</menu>
+
+<editEventComponent
+	*ngIf="showEditEventMenu"
+	(toggleEditEventMenu)="onToggleEditEventMenu()">
+</editEventComponent>
+
+<content [currentTab]="currentTab"></content>

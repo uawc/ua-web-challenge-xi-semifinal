@@ -1,16 +1,16 @@
 "use strict";
 
-let gulp = require('gulp');
-let less = require('gulp-less');
-let plumber = require('gulp-plumber');
-let path = require('path');
+var gulp = require('gulp');
+var less = require('gulp-less');
+var plumber = require('gulp-plumber');
+var path = require('path');
 
-const LESS_SRC_PATH = 'src/css/**/*.less';
+var LESS_SRC_PATH = 'src/css/**/*.less';
 
 /**
  * Compiles each style file and places it in css dir.
  */
-gulp.task('css', () => {
+gulp.task('css', function() {
 	return gulp.src(LESS_SRC_PATH)
 		.pipe(plumber())
 		.pipe(less({
@@ -19,5 +19,7 @@ gulp.task('css', () => {
 		.pipe(gulp.dest('app/css'));
 });
 
-gulp.task('css:watch', () => gulp.watch(LESS_SRC_PATH, ['css']));
+gulp.task('css:watch', function() {
+	gulp.watch(LESS_SRC_PATH, ['css']);
+});
 

@@ -1,0 +1,70 @@
+:host {
+  border-bottom: 1px solid #e1e4e8;
+  background: #fafbfc;
+  user-select: none;
+}
+
+.clear {
+  clear: both;
+}
+
+.menu-inner {
+  display: block;
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.navigation-tabs {
+  float: left;
+
+  li {
+    display: inline-block;
+    padding: 13px;
+    width: 80px;
+    text-align: center;
+    border: solid transparent;
+    border-width: 0 1px;
+    color: #545454;
+    cursor: pointer;
+
+    &.active {
+      background: #fff;
+      border-color: transparent #e1e4e8;
+      color: #000;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+
+    &:hover {
+      background: rgba(212, 231, 249, 0.57);
+    }
+
+  }
+}
+
+.navigation-buttons {
+  float: right;
+
+  li {
+    position: relative;
+    float: left;
+    padding: 11px 18px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #586069;
+    border: 1px solid #e1e4e8;
+    border-width: 0 1px;
+    cursor: pointer;
+
+    &+li{
+      margin-left: -1px;
+    }
+
+    &:hover {
+      background: rgba(212, 231, 249, 0.57);
+    }
+  }
+}

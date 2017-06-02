@@ -1,0 +1,9 @@
+<div *ngFor="let model of calendarEventsCollection"
+     (click)="onEventClick(model)"
+     [ngClass]="['calendar-event', 'event']"
+     [class.active]="activeEvent && activeEvent.id  === model.id"
+     [ngStyle]="{'top.px': model.positionTop, 'height.px': model.height, 'width': model.width + '%', 'left': model.offset + '%'}">
+	<div [ngClass]="['calendar-event__duration', 'event']">{{model.startTime}} - {{model.endTime}}</div>
+	<div [ngClass]="['calendar-event__title', 'event']">{{model.title}}</div>
+</div>
+

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  padding: 20px 0 0 48px;
+}
+
+.calendar-day__half-hour-item {
+  position: relative;
+  height: 15px;
+
+  &:nth-child(odd) {
+    border-top: 1px solid #dcdcdc;
+
+  }
+}
+
+.calendar-day {
+  position: relative;
+}
+
+.calendar-day__hours {
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 15px;
+  top: -8.5px;
+  left: -41px;
+  font-size: 14px;
+  color: #909090;
+}

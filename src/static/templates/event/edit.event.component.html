@@ -1,0 +1,30 @@
+<form class="add-event-form">
+	<input [class.invalid]="!isTitleValid"
+	       [(ngModel)]="title"
+	       type="text"
+	       name="title"
+	       class="title-input"
+	       placeholder="Title for future event">
+
+	<label for="start-date">Start event date</label>
+	<label for="end-date">End event date</label>
+
+	<input [class.invalid]="!isStartDateValid"
+	       [(ngModel)]="startDate"
+	       type="datetime-local"
+	       class="date-input"
+	       name="startDate"
+	       id="start-date">
+
+	<input [class.invalid]="!isEndDateValid"
+	       [(ngModel)]="endDate"
+	       type="datetime-local"
+	       class="date-input"
+	       name="endDate"
+	       id="end-date">
+
+	<button *ngIf="!activeEvent" (click)="onCreateEventClick($event)" type="button">Create new Event</button>
+	<button *ngIf="activeEvent" (click)="onEditEventClick($event)" type="button">Edit current Event</button>
+	<button (click)="onCancelClick()" type="button">Cancel</button>
+</form>
+

@@ -1,6 +1,6 @@
 "use strict";
 
-let gulp = require('gulp');
+var gulp = require('gulp');
 
 require('./gulp-tasks/css');
 require('./gulp-tasks/app');
@@ -14,7 +14,7 @@ gulp.task('compile', ['css', 'static', 'dependecies', 'templates', 'app']);
 gulp.task('watch', ['css:watch', 'templates:watch', 'app:watch', 'static:watch']);
 
 
-gulp.task('build', ['clean'], () => {
+gulp.task('build', ['clean'], function() {
 	gulp.run(['compile', 'connect', 'watch']);
 });
 

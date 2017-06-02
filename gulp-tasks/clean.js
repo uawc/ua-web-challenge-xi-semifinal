@@ -1,8 +1,8 @@
 "use strict";
 
-let gulp = require('gulp');
-let del = require('del');
+var gulp = require('gulp');
+var del = require('del');
 
-gulp.task('clean', () => {
+gulp.task('clean', function() {
 	return del(['app']);
 });

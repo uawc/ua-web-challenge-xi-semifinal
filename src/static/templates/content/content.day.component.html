@@ -1,0 +1,15 @@
+<div [ngClass]="['calendar-day']">
+
+	<div [ngClass]="['calendar-day__hour-items']">
+		<div *ngFor="let model of halfHourModels"
+		     [ngClass]="['calendar-day__half-hour-item']">
+
+			<div [ngClass]="['calendar-day__hours']"
+			     *ngIf="isShowHours && model.minutes === 0">
+				{{model.formattedDate}}
+			</div>
+		</div>
+	</div>
+
+	<dayEventsComponent></dayEventsComponent>
+</div>

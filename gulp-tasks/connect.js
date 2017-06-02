@@ -1,9 +1,9 @@
 "use strict";
 
-let gulp = require('gulp');
-let connect = require('gulp-connect');
+var gulp = require('gulp');
+var connect = require('gulp-connect');
 
-gulp.task('connect', () => {
+gulp.task('connect', function() {
 	connect.server({
 		root: './app',
 		port: 8000,

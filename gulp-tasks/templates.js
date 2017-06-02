@@ -1,16 +1,18 @@
 "use strict";
 
-let gulp = require('gulp');
-let plumber = require('gulp-plumber');
+var gulp = require('gulp');
+var plumber = require('gulp-plumber');
 
-const TEMPLATES_SRC = 'src/templates/**/*.html';
+var TEMPLATES_SRC = 'src/templates/**/*.html';
 
 /**
  * Compiles templates.
  */
-gulp.task('templates', () => {
+gulp.task('templates', function() {
 	return gulp.src(TEMPLATES_SRC)
 		.pipe(gulp.dest('app/templates'));
 });
 
-gulp.task('templates:watch', () => gulp.watch(TEMPLATES_SRC, ['templates']));
+gulp.task('templates:watch', function() {
+	gulp.watch(TEMPLATES_SRC, ['templates']);
+});
