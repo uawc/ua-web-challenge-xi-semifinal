@@ -1,13 +1,12 @@
 <title></title>
 
 <menu [currentTab]="currentTab"
-      (tabChange)="onTabChange($event)"
-      (toggleEditEventMenu)="onToggleEditEventMenu()">
+      (tabChange)="onTabChange($event)">
 </menu>
 
-<editEventComponent
-	*ngIf="showEditEventMenu"
-	(toggleEditEventMenu)="onToggleEditEventMenu()">
-</editEventComponent>
+<editReminderComponent
+	*ngIf="isShowEditReminderMenu"
+	[activeReminder]="activeReminder">
+</editReminderComponent>
 
 <content [currentTab]="currentTab"></content>

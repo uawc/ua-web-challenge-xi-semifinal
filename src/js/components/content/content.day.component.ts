@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { EventModel } from '../../models/event.model';
+import { Component, OnInit } from '@angular/core';
 import { HalfHourModel } from '../../models/half.hour.model'
-import { DayEventsComponent } from '../event/day.events.component'
+import { DayReminderComponent } from '../reminder/day.reminder.component'
 
 @Component({
 	selector: 'content-day',
 	templateUrl: './templates/content/content.day.component.html',
 	styleUrls: ['./css/content/content.day.component.css'],
-	directives: [[DayEventsComponent]]
+	directives: [[DayReminderComponent]]
 })
 
 export class ContentDayComponent implements OnInit {

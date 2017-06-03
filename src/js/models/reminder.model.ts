@@ -1,9 +1,8 @@
 import * as _ from 'underscore';
 
-export class EventModel {
+export class ReminderModel {
 	id: number;
 	title: string;
-	width: number;
 	endDate: string;
 	startDateString: string;
 	endDateString: string;
@@ -12,15 +11,17 @@ export class EventModel {
 	endTime: string;
 	positionTop: number;
 
-	height = 0;
-	offset = 0;
+	height: number;
+	offset: number;
+	width: number;
 
 	ITEM_HEIGHT = 31;
 
 	constructor(options: any) {
 		_.extend(this, options);
-		
+
 		this.splitDate();
+		this.resetToDefault();
 		this.updatePosition();
 		this.updateHeight();
 	}
@@ -57,6 +58,12 @@ export class EventModel {
 		let positionEnd = this.getPositionEnd();
 
 		this.height = positionEnd - positionTop;
+	}
+
+	resetToDefault(): void {
+		this.height = 0;
+		this.offset = 0;
+		this.width = 0;
 	}
 	
 	public setWidthAndOffset(width: number, offset: number): void {

@@ -1,11 +1,9 @@
 export class HalfHourModel {
-	id: number;
 	hours: number;
 	minutes: number;
 	formattedDate: string;
 
 	constructor(id: number) {
-		this.id = id;
 		this.hours = Math.floor(id / 2);
 		this.minutes = id % 2 === 0 ? 0 : 30;
 

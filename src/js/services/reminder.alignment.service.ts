@@ -1,28 +1,28 @@
 import * as _ from 'underscore';
 import { Injectable } from '@angular/core';
-import { EventModel } from '../models/event.model'
+import { ReminderModel } from '../models/reminder.model'
 import { IPosition } from '../interfaces/position.interface'
 
 @Injectable()
-export class EventsAlignmentService {
+export class RemindersAlignmentService {
 	
-	public calculateEventsAlignment(models: EventModel[]): EventModel[] {
-		let sortedModels = _.sortBy(models, 'startTime');
+	public calculateRemindersAlignment(reminders: ReminderModel[]): ReminderModel[] {
+		let sortedModels = _.sortBy(reminders, 'startTime');
 
-		sortedModels.forEach(this.calculateEventAlignment.bind(this));
+		sortedModels.forEach(this.calculateReminderAlignment.bind(this));
 		
 		return sortedModels;
 	}
 
-	protected calculateEventAlignment(element: EventModel, index: number, sortedModels: EventModel[]): void {
-		if (element.width) {
+	protected calculateReminderAlignment(reminder: ReminderModel, index: number, sortedModels: ReminderModel[]): void {
+		if (reminder.width) {
 			return;
 		}
 
-		let crossDatedModels = this.findEventsCrossedByDate(sortedModels, index);
+		let crossDatedModels = this.findRemindersCrossedByDate(sortedModels, index);
 
 		if (!crossDatedModels.length) {
-			element.setWidthAndOffset(100, 0);
+			reminder.setWidthAndOffset(100, 0);
 
 			return;
 		}
@@ -30,16 +30,16 @@ export class EventsAlignmentService {
 		let modelsWithWidth = _.filter(crossDatedModels, (model) => !!model.width);
 
 		if (!modelsWithWidth.length) {
-			this.calculateEqualAlignment(crossDatedModels, element);
+			this.calculateEqualAlignment(crossDatedModels, reminder);
 		} else {
-			this.calculateDifferentAlignment(crossDatedModels, modelsWithWidth, element);
+			this.calculateDifferentAlignment(crossDatedModels, modelsWithWidth, reminder);
 		}
 	}
 
-	protected findEventsCrossedByDate(models: EventModel[], modelId: number): EventModel[] {
+	protected findRemindersCrossedByDate(models: ReminderModel[], modelId: number): ReminderModel[] {
 		let crossedByDateModels = [];
 
-		models.forEach((el: EventModel, i: number) => {
+		models.forEach((el: ReminderModel, i: number) => {
 			if (modelId === i) {
 				return;
 			}
@@ -53,14 +53,14 @@ export class EventsAlignmentService {
 		return crossedByDateModels;
 	}
 
-	protected calculateEqualAlignment(models: EventModel[], currentModel:  EventModel): void {
+	protected calculateEqualAlignment(models: ReminderModel[], currentModel:  ReminderModel): void {
 		let offset = 0;
 		let knownWidth = 100 / (models.length + 1);
 
 		currentModel.setWidthAndOffset(knownWidth, offset);
 		offset += knownWidth;
 
-		models.map((model: EventModel) => {
+		models.map((model: ReminderModel) => {
 			model.setWidthAndOffset(knownWidth, offset);
 			offset += knownWidth;
 
@@ -68,7 +68,7 @@ export class EventsAlignmentService {
 		});
 	}
 
-	protected calculateDifferentAlignment(models: EventModel[], modelsWithWidth: EventModel[], currentModel:  EventModel): void {
+	protected calculateDifferentAlignment(models: ReminderModel[], modelsWithWidth: ReminderModel[], currentModel:  ReminderModel): void {
 		let availablePosition = this.getBiggerAvailablePosition(modelsWithWidth);
 		let offset = availablePosition.startPosition;
 		let knownWidth = availablePosition.width / (models.length - modelsWithWidth.length + 1);
@@ -76,7 +76,7 @@ export class EventsAlignmentService {
 		currentModel.setWidthAndOffset(knownWidth, offset);
 		offset += knownWidth;
 
-		models.map((model: EventModel) => {
+		models.map((model: ReminderModel) => {
 			if (!model.width) {
 				model.setWidthAndOffset(knownWidth, offset);
 				offset += knownWidth;
@@ -86,7 +86,7 @@ export class EventsAlignmentService {
 		});
 	}
 
-	protected getBiggerAvailablePosition(models: EventModel[]): IPosition {
+	protected getBiggerAvailablePosition(models: ReminderModel[]): IPosition {
 		let occupiedPositions = this.getOccupiedPositions(models);
 		let availablePositions = this.getAvailablePositions(occupiedPositions);
 
@@ -125,7 +125,7 @@ export class EventsAlignmentService {
 		return availablePosition;
 	}
 
-	protected getOccupiedPositions(models: EventModel[]): IPosition[] {
+	protected getOccupiedPositions(models: ReminderModel[]): IPosition[] {
 		let sortedModels = _.sortBy(models, 'offset');
 
 		let occupiedPosition = [];

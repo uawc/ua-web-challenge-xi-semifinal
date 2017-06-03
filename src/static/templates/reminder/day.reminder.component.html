@@ -1,0 +1,9 @@
+<div *ngFor="let model of remindersCollection"
+     (click)="onReminderClick(model)"
+     [ngClass]="['calendar-reminder', 'reminder']"
+     [class.active]="activeReminder && activeReminder.id  === model.id"
+     [ngStyle]="{'top.px': model.positionTop, 'height.px': model.height, 'width': model.width + '%', 'left': model.offset + '%'}">
+	<div [ngClass]="['calendar-reminder__duration', 'reminder']">{{model.startTime}} - {{model.endTime}}</div>
+	<div [ngClass]="['calendar-reminder__title', 'reminder']">{{model.title}}</div>
+</div>
+

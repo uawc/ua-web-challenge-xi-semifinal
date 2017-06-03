@@ -1,0 +1,53 @@
+<form class="add-reminder-form">
+	<input [class.invalid]="!isTitleValid"
+	       [(ngModel)]="reminder.title"
+	       type="text"
+	       name="title"
+	       class="title-input"
+	       placeholder="Reminder title">
+
+	<label for="start-date">Start reminder date</label>
+	<label for="end-date">End reminder date</label>
+
+	<input [class.invalid]="!isStartDateValid"
+	       [(ngModel)]="reminder.startDateString"
+	       type="datetime-local"
+	       class="date-input"
+	       name="startDate"
+	       id="start-date">
+
+	<input [class.invalid]="!isEndDateValid"
+	       [(ngModel)]="reminder.endDateString"
+	       type="datetime-local"
+	       class="date-input"
+	       name="endDate"
+	       id="end-date">
+
+	<button *ngIf="!activeReminder"
+	        [ngClass]="['add-button']"
+	        (click)="onCreateReminderClick($event)"
+	        type="button">Create new Reminder</button>
+
+	<button *ngIf="!activeReminder"
+	        (click)="onCancelClick()"
+	        [ngClass]="['add-button']"
+	        type="button">Cancel</button>
+
+	<button *ngIf="activeReminder"
+	        (click)="onEditReminderClick($event)"
+	        [ngClass]="['edit-button']"
+	        type="button">Edit Reminder</button>
+
+	<button *ngIf="activeReminder"
+	        [ngClass]="['edit-button']"
+	        (click)="onDeleteReminderClick($event)"
+	        type="button">Delete</button>
+
+	<a download
+	   href="#"
+	   target="_blank"
+	   *ngIf="activeReminder"
+	   (click)="onExportReminderClick($event)"
+	   [ngClass]="['edit-button']">Export</a>
+</form>
+

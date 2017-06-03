@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { EventsStoreService } from './services/events.store.service';
-import { EventsAlignmentService } from './services/events.alignment.service';
+import { RemindersStoreService } from './services/reminder.store.service';
+import { RemindersAlignmentService } from './services/reminder.alignment.service';
+import { ReminderEditService } from './services/reminder.edit.service';
+import { NotificationService } from './services/notification.service';
 import { DateService } from './services/date.service';
 import { AppComponent }  from './components/app.component';
 
@@ -11,7 +13,7 @@ import { AppComponent }  from './components/app.component';
 	imports: [[BrowserModule, FormsModule]],
 	declarations: [[AppComponent]],
 	bootstrap: [[AppComponent]],
-	providers: [[HTTP_PROVIDERS], [EventsStoreService], [EventsAlignmentService], [DateService]]
+	providers: [[HTTP_PROVIDERS], [RemindersStoreService], [RemindersAlignmentService], [DateService], [ReminderEditService], [NotificationService]]
 })
 
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { ITab } from '../../interfaces/tab.interface';
 import { NAVIGATION_TABS } from '../../data/navigation.data';
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { EventsStoreService } from '../../services/events.store.service';
+import { ReminderEditService } from '../../services/reminder.edit.service';
 import { DateService } from '../../services/date.service';
 
 @Component({
@@ -15,9 +15,9 @@ export class MenuComponent {
 
 	@Input()  currentTab: string;
 	@Output() tabChange = new EventEmitter();
-	@Output() toggleEditEventMenu = new EventEmitter();
+	@Output() toggleEditReminderMenu = new EventEmitter();
 
-	constructor(private eventStoreService: EventsStoreService, private dateService: DateService) {}
+	constructor(private reminderEditService: ReminderEditService, private dateService: DateService) {}
 
 	/**
 	 * Emitting to parent that navigation tab has been changed
@@ -26,8 +26,8 @@ export class MenuComponent {
 		this.tabChange.emit(tab);
 	}
 
-	protected onAddEventClick(): void {
-		this.toggleEditEventMenu.emit();
+	protected onAddReminderClick(): void {
+		this.reminderEditService.showReminderEditMenu();
 	}
 	
 	protected onNextDateClick(): void {

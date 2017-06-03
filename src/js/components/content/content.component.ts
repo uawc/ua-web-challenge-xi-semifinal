@@ -4,7 +4,7 @@ import { ContentDayComponent } from './content.day.component';
 import { ContentMonthComponent } from './content.month.component';
 import { ContentWeekComponent } from './content.week.component';
 import { ContentYearComponent } from './content.year.component';
-import { EventsStoreService } from '../../services/events.store.service';
+import { ReminderEditService } from '../../services/reminder.edit.service';
 import { ITab } from '../../interfaces/tab.interface';
 
 @Component({
@@ -17,13 +17,13 @@ import { ITab } from '../../interfaces/tab.interface';
 export class ContentComponent {
 	@Input()  currentTab: ITab;
 
-	constructor(private eventStoreService: EventsStoreService) {}
+	constructor(private reminderEditService: ReminderEditService) {}
 
 	@HostListener('click', ['$event'])
 
 	protected onComponentClick($event) {
-		if ($event.target.className.indexOf('event') === -1) {
-			this.eventStoreService.setActiveEvent(null);
+		if ($event.target.className.indexOf('reminder') === -1) {
+			this.reminderEditService.hideReminderEditMenu();
 		}
 	}
 }

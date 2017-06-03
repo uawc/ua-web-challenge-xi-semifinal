@@ -4,7 +4,7 @@
   background: #fafbfc;
 }
 
-.add-event-form {
+.add-reminder-form {
   display: block;
   margin: 0 auto;
   width: 400px;
@@ -52,25 +52,41 @@ label {
   font-weight: bold;
 }
 
-button {
+.add-button,
+.edit-button {
+  display: block;
+  padding: 6px;
   font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  text-align: center;
   background: #fff;
   border: 1px solid #d6d6d6;
   border-radius: 5px;
-  padding: 6px;
-  display: block;
+  float: left;
   cursor: pointer;
   outline: none;
-  float: left;
-  width: 183px;
 
   &:hover {
     background: rgba(212, 231, 249, 0.57);
   }
+}
+
+.add-button {
+  width: 183px;
 
   &:last-child {
     margin-left: 32px;
   }
+}
+
+.edit-button {
+  margin-right: 10px;
+  width: 122px;
+}
+
+a.edit-button {
+  margin-right: 0;
 }
 
 .invalid {
