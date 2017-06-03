@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HalfHourModel } from '../../models/half.hour.model'
 import { DayReminderComponent } from '../reminder/day.reminder.component'
 
@@ -10,15 +10,17 @@ import { DayReminderComponent } from '../reminder/day.reminder.component'
 })
 
 export class ContentDayComponent implements OnInit {
+	@Input() currentDayDateString: string;
+	@Input() isShowHours: string;
+	
 	protected halfHourModels = [] as HalfHourModel[];
-	protected isShowHours = true;
 	
 	public ngOnInit(): void {
 		this.createModels();
 	}
 	
 	protected createModels(): void {
-		for (let i = 0; i <= 48; i++) {
+		for (let i = 0; i <= 47; i++) {
 			this.halfHourModels.push(new HalfHourModel(i));
 		}
 	}

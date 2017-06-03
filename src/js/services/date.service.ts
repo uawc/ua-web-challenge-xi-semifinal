@@ -6,29 +6,41 @@ import { Injectable } from '@angular/core';
 export class DateService {
 	protected dateUpdated = new Subject<any>();
 
-	public currentDateString: string;
-	public currentDate = new Date();
+	public currentDate: Date;
+	public currentDayDateString: string;
+	public currentWeekDates: Date[] = [];
+	public currentWeekDateStrings: string[] = [];
+	
 	public dateUpdated$ = this.dateUpdated.asObservable();
 
 	constructor() {
+		this.resetDatesToCurrent();
 		this.updateCurrentDateString();
+		this.updateCurrentWeekDateStrings();
 	}
 
-	public goToNextDay(): void {
+	public goToNextDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() + 1);
+		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() + 7));
+
 		this.updateCurrentDateString();
+		this.updateCurrentWeekDateStrings();
 		this.announceDateUpdated();
 	}
 
-	public goToPrevDay(): void {
+	public goToPrevDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() - 1);
+		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() - 7));
+
 		this.updateCurrentDateString();
+		this.updateCurrentWeekDateStrings();
 		this.announceDateUpdated();
 	}
 
-	public goToCurrentDay(): void {
-		this.currentDate = new Date();
+	public goToCurrentDate(): void {
+		this.resetDatesToCurrent();
 		this.updateCurrentDateString();
+		this.updateCurrentWeekDateStrings();
 		this.announceDateUpdated();
 	}
 	
@@ -61,11 +73,46 @@ export class DateService {
 		return `${localeDate}T${localeTime}`;
 	}
 
+	protected resetDatesToCurrent(): void {
+		this.currentDate = new Date();
+		this.createDefaultWeekDates();
+	}
+
 	protected announceDateUpdated(): void {
 		this.dateUpdated.next({});
 	}
 
 	protected updateCurrentDateString(): void {
-		[this.currentDateString] = this.getFormattedDate(this.currentDate).split('T');
+		[this.currentDayDateString] = this.getFormattedDate(this.currentDate).split('T');
+	}
+
+	protected createDefaultWeekDates(): void {
+		let date = new Date();
+		let day = date.getDay();
+		let weekDates = [];
+
+		weekDates.push(date);
+
+		for (let i = day, k = 1; i < 7; i++, k++) {
+			let nextDate = new Date();
+
+			nextDate.setDate(nextDate.getDate() + k);
+
+			weekDates.push(nextDate);
+		}
+
+		for (let i = day, k = 1; i > 1; i--, k++) {
+			let prevDate = new Date();
+
+			prevDate.setDate(prevDate.getDate() - k);
+
+			weekDates.push(prevDate);
+		}
+		
+		this.currentWeekDates = _.sortBy(weekDates, (date: Date) => date.getDay());
+	}
+
+	protected updateCurrentWeekDateStrings(): void {
+		this.currentWeekDateStrings = this.currentWeekDates.map((date: Date) => this.getFormattedDate(date).split('T')[0]);
 	}
 }

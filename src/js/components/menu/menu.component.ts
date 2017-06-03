@@ -31,14 +31,14 @@ export class MenuComponent {
 	}
 	
 	protected onNextDateClick(): void {
-		this.dateService.goToNextDay();
+		this.dateService.goToNextDate();
 	}
 
 	protected onPrevDateClick(): void {
-		this.dateService.goToPrevDay();
+		this.dateService.goToPrevDate();
 	}
 
 	protected onCurrentDateClick(): void {
-		this.dateService.goToCurrentDay();
+		this.dateService.goToCurrentDate();
 	}
 }

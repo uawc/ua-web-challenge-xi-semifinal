@@ -1,7 +1,25 @@
 :host {
+  min-width: 1200px;
   display: block;
   background: #24292e;
   color: rgba(255,255,255,0.75);
   padding: 5px;
   text-align: center;
+  overflow: auto;
+}
+
+.week-title {
+  width: 1152px;
+  margin: 0 auto;
+  padding-left: 48px;
+}
+
+.title-week-day {
+  width: 163px;
+  float: left;
+
+  &.active {
+    color: #0ab14d;
+    text-decoration: underline;
+  }
 }

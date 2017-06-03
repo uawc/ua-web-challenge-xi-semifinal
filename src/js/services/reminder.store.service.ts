@@ -46,27 +46,24 @@ export class RemindersStoreService {
 
 		dayReminders = dayReminders.map((el) => {
 			if (el.startDate < date && date < el.endDate) {
-				return new ReminderModel({
-					id: el.id,
+				return new ReminderModel(_.extend(el, {
 					startDateString: `${date}T00:00`,
 					endDateString: `${date}T23:59`
-				});
+				}));
 			}
 
 			if (el.startDate < date && date === el.endDate) {
-				return new ReminderModel({
-					id: el.id,
+				return new ReminderModel(_.extend(el, {
 					startDateString: `${date}T00:00`,
 					endDateString: el.endDateString
-				});
+				}));
 			}
 
 			if (el.startDate === date && date < el.endDate) {
-				return new ReminderModel({
-					id: el.id,
+				return new ReminderModel(_.extend(el, {
 					startDateString: el.startDateString,
 					endDateString: `${date}T23:59`
-				});
+				}));
 			}
 
 			return el;
@@ -77,6 +74,10 @@ export class RemindersStoreService {
 
 	public getReminderByStartDate(startDateString: string): ReminderModel {
 		return _.findWhere(this.allReminders, { startDateString });
+	}
+	
+	public getReminderById(id: number): ReminderModel {
+		return _.findWhere(this.allReminders, { id });
 	}
 	
 	public saveReminders(): void {
@@ -91,7 +92,7 @@ export class RemindersStoreService {
 	}
 
 	public updateExistingReminder(id: number, data: any): void {
-		let activeReminder = _.findWhere(this.allReminders, { id });
+		let activeReminder = this.getReminderById(id);
 
 		_.extend(activeReminder, data);
 

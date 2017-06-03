@@ -1,6 +1,7 @@
 <div [ngClass]="['calendar-day']">
 
-	<div [ngClass]="['calendar-day__hour-items']">
+	<div [ngClass]="['calendar-day__hour-items']"
+	     [class.with-hours]="isShowHours">
 		<div *ngFor="let model of halfHourModels"
 		     [ngClass]="['calendar-day__half-hour-item']">
 
@@ -11,5 +12,5 @@
 		</div>
 	</div>
 
-	<dayReminderComponent></dayReminderComponent>
+	<dayReminderComponent [currentDayDateString]="currentDayDateString"></dayReminderComponent>
 </div>

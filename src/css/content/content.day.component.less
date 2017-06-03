@@ -1,6 +1,7 @@
 :host {
   display: block;
-  padding: 20px 0 0 48px;
+  padding: 0 0 0 48px;
+  margin: 20px 0;
 }
 
 .calendar-day__half-hour-item {
@@ -9,7 +10,22 @@
 
   &:nth-child(odd) {
     border-top: 1px solid #dcdcdc;
+  }
 
+  &:last-child {
+    border-bottom: 1px solid #dcdcdc;
+
+    .with-hours &:after {
+      content: '00:00';
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 15px;
+      top: 6.5px;
+      left: -41px;
+      font-size: 14px;
+      color: #909090;
+    }
   }
 }
 

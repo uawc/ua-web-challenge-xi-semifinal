@@ -1,4 +1,4 @@
-<content-day    *ngIf="currentTab.name == 'day'"></content-day>
+<content-day    *ngIf="currentTab.name == 'day'" [currentDayDateString]="currentDayDateString" [isShowHours]="true"></content-day>
 <content-week   *ngIf="currentTab.name == 'week'"></content-week>
 <content-year   *ngIf="currentTab.name == 'year'"></content-year>
 <content-month  *ngIf="currentTab.name == 'month'" ></content-month>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DateService } from '../../services/date.service';
+import { ITab } from '../../interfaces/tab.interface';
 
 @Component({
 	selector: 'title',
@@ -8,17 +9,22 @@ import { DateService } from '../../services/date.service';
 })
 
 export class TitleComponent implements OnInit {
+	@Input() currentTab: ITab;
+	
+	protected todayDate = new Date();
 	protected currentDate: Date;
+	protected currentWeekDates: Date[];
 
 	constructor(private dateService: DateService) {}
 
 	public ngOnInit(): void {
-		this.updateDateString();
+		this.updateDates();
 
-		this.dateService.dateUpdated$.subscribe(this.updateDateString.bind(this));
+		this.dateService.dateUpdated$.subscribe(this.updateDates.bind(this));
 	}
 
-	protected updateDateString() {
+	protected updateDates(): void {
 		this.currentDate = this.dateService.currentDate;
+		this.currentWeekDates = this.dateService.currentWeekDates;
 	}
 }

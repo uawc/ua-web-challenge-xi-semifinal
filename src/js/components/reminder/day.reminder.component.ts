@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ReminderModel } from '../../models/reminder.model';
-import { DateService } from '../../services/date.service';
 import { RemindersStoreService } from '../../services/reminder.store.service';
 import { RemindersAlignmentService } from '../../services/reminder.alignment.service';
 import { ReminderEditService } from '../../services/reminder.edit.service';
@@ -12,25 +11,29 @@ import { ReminderEditService } from '../../services/reminder.edit.service';
 })
 
 export class DayReminderComponent implements OnInit {
+	@Input() currentDayDateString: string;
+
 	protected activeReminder: ReminderModel;
 	protected remindersCollection: ReminderModel[];
 	
-	constructor(private dateService: DateService,
-	            private reminderEditService: ReminderEditService,
+	constructor(private reminderEditService: ReminderEditService,
 	            private remindersStoreService: RemindersStoreService,
 				private remindersAlignmentService: RemindersAlignmentService) {}
 
 	public ngOnInit(): void {
 		this.updateRemindersCollection();
 
-		this.dateService.dateUpdated$.subscribe(this.updateRemindersCollection.bind(this));
 		this.reminderEditService.showReminderEditMenu$.subscribe(this.updateActiveReminder.bind(this));
 		this.reminderEditService.hideReminderEditMenu$.subscribe(this.updateActiveReminder.bind(this));
 		this.remindersStoreService.remindersUpdated$.subscribe(this.updateRemindersCollection.bind(this));
 	}
 
+	public ngOnChanges(): void {
+		this.updateRemindersCollection();
+	}
+
 	protected updateRemindersCollection(): void {
-		let eventsPerDay = this.remindersStoreService.getRemindersPerDay(this.dateService.currentDateString);
+		let eventsPerDay = this.remindersStoreService.getRemindersPerDay(this.currentDayDateString);
 		
 		this.remindersCollection = this.remindersAlignmentService.calculateRemindersAlignment(eventsPerDay);
 	}
@@ -40,6 +43,8 @@ export class DayReminderComponent implements OnInit {
 	}
 
 	protected onReminderClick(reminder: ReminderModel): void {
-		this.reminderEditService.showReminderEditMenu(reminder);
+		let activeReminder = this.remindersStoreService.getReminderById(reminder.id);
+
+		this.reminderEditService.showReminderEditMenu(activeReminder);
 	}
 }

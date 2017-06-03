@@ -1,1 +1,4 @@
-<div>Week</div>
+<content-day *ngFor="let date of currentWeekDateStrings; let i = index"
+             [currentDayDateString]="date"
+             [isShowHours]="i === 0"
+             [ngClass]="['week-day']"></content-day>
