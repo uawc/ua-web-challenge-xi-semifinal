@@ -117,7 +117,7 @@ export class RemindersStoreService {
 	 * Restoring reminders from localStorage
 	 */
 	protected restoreReminders(): void {
-		let reminders = localStorage.getItem('reminders');
+		let reminders = localStorage.getItem('reminders') || '[]';
 
 		try {
 			this.allReminders = this.getResetModels(JSON.parse(reminders));

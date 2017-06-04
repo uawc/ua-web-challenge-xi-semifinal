@@ -1,1 +1,10 @@
-<div>Agenda</div>
+<div *ngFor="let reminder of weekReminders"
+     [ngClass]="['agenda-item']">
+	<div [ngClass]="['agenda-item__date']">{{reminder.startDate}}</div>
+	<div [ngClass]="['agenda-item__title']">{{reminder.title}}</div>
+</div>
+
+<div *ngIf="!weekReminders.length"
+     [ngClass]="['agenda-item__no-found']">
+	There no any reminders for selected week
+</div>

@@ -3,7 +3,7 @@
 
 	<div [class.active]="currentDayDate.toDateString() === todayDate.toDateString()"
 	     [ngClass]="['month-day__number']">
-		{{currentDayDate.toString().slice(4, -29)}}
+		{{currentDayDate.getDate()}}
 	</div>
 
 	<div *ngIf="remindersAmount"

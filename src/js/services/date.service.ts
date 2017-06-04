@@ -89,7 +89,7 @@ export class DateService {
 	 * Formatting date stamp to be match to datetime-local inputs values
 	 */
 	public getFormattedDate(date: Date = new Date()): string {
-		let localeDateArr = date.toLocaleDateString().split('-');
+		let localeDateArr = date.toJSON().split('T')[0].split('-');
 		let localeTime = date.toLocaleTimeString().slice(0,-3);
 
 		localeDateArr = localeDateArr.map((date) => date.length === 1 ? '0' + date : date);
@@ -118,6 +118,15 @@ export class DateService {
 	}
 
 	/**
+	 * Getting month name
+	 */
+	protected getMonthName(id: number): string {
+		let month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+		return month[id];
+	}
+
+	/**
 	 * Updating all date strings
 	 */
 	protected updateDateStrings(): void {
@@ -143,7 +152,7 @@ export class DateService {
 			let date = new Date(this.currentYearDate.getFullYear(), i, 1);
 
 			this.currentYearDates.push({
-				name: date.toString().slice(4, -32),
+				name: this.getMonthName(date.getMonth()),
 				dates: this.getMonthDates(date)
 			});
 		}

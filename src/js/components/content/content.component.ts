@@ -4,6 +4,7 @@ import { ContentDayComponent } from './content.day.component';
 import { ContentWeekComponent } from './content.week.component';
 import { ContentYearComponent } from './content.year.component';
 import { ContentMonthComponent } from './content.month.component';
+import { ContentAgendaComponent } from './content.agenda.component';
 import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { ReminderEditService } from '../../services/reminder.edit.service';
 
@@ -11,7 +12,7 @@ import { ReminderEditService } from '../../services/reminder.edit.service';
 	selector: 'content',
 	styleUrls: ['./css/content/content.component.css'],
 	templateUrl: './templates/content/content.component.html',
-	directives: [[ContentDayComponent], [ContentMonthComponent], [ContentWeekComponent], [ContentYearComponent]]
+	directives: [[ContentDayComponent], [ContentMonthComponent], [ContentWeekComponent], [ContentYearComponent], [ContentAgendaComponent]]
 })
 
 export class ContentComponent implements OnInit {

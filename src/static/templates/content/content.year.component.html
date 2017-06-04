@@ -12,6 +12,6 @@
 	     (click)="onDateClick(date)"
 	     [class.active]="date.toDateString && date.toDateString() === todayDate.toDateString()"
 	     [ngClass]="['month__day-number']">
-		{{date.toString().slice(8, -29)}}
+		{{date.getDate && date.getDate()}}
 	</div>
 </div>

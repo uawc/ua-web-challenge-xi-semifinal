@@ -23,6 +23,13 @@
 </div>
 
 <div *ngIf="currentTab.name == 'year'"
-     [ngClass]="['year-title']">
+           [ngClass]="['year-title']">
 	{{currentYearDate.getFullYear()}}
+</div>
+
+<div *ngIf="currentTab.name == 'agenda'"
+     [ngClass]="['agenda-title']">
+	Schedule from
+	<span>{{currentWeekDates[0].toDateString()}}</span> to
+	<span>{{currentWeekDates[currentWeekDates.length - 1].toDateString()}}</span>
 </div>
