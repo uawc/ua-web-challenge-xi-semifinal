@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '../../services/date.service';
 import { ReminderModel } from '../../models/reminder.model';
+import { NAVIGATION_TABS } from '../../data/navigation.data';
+import { NavigationService } from '../../services/navigation.service';
 import { RemindersStoreService } from '../../services/reminder.store.service';
 
 @Component({
@@ -14,6 +16,7 @@ export class ContentAgendaComponent implements OnInit {
 	protected weekReminders = [] as ReminderModel[];
 
 	constructor(private dateService: DateService,
+	            private navigationService: NavigationService,
 	            private remindersStoreService: RemindersStoreService) {}
 
 	/**
@@ -23,6 +26,7 @@ export class ContentAgendaComponent implements OnInit {
 		this.updateWeekReminders();
 
 		this.dateService.dateUpdated$.subscribe(this.updateWeekReminders.bind(this));
+		this.remindersStoreService.remindersUpdated$.subscribe(this.updateWeekReminders.bind(this));
 	}
 
 	/**
@@ -38,5 +42,10 @@ export class ContentAgendaComponent implements OnInit {
 
 			this.weekReminders = this.weekReminders.concat(reminders);
 		});
+	}
+
+	onReminderClick(reminder: ReminderModel): void {
+		this.dateService.goToSpecificDate(new Date(reminder.startDate));
+		this.navigationService.navigateToTab(NAVIGATION_TABS[0]);
 	}
 }

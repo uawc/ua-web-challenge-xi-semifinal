@@ -27,12 +27,18 @@ export class MonthReminderComponent implements OnInit {
 		if (this.currentDayDate.toDateString) {
 			this.updateRemindersAmount();
 		}
+
+		this.remindersStoreService.remindersUpdated$.subscribe(this.updateRemindersAmount.bind(this));
 	}
 
 	/**
 	 * Updating amount of reminders for current date
 	 */
 	protected updateRemindersAmount(): void {
+		if (!this.currentDayDate.toDateString) {
+			return;
+		}
+		
 		let startDateString = this.dateService.getFormattedDate(this.currentDayDate);
 		let reminders = this.remindersStoreService.getRemindersByStartDate(startDateString.split('T')[0]);
 

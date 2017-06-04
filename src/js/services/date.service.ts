@@ -89,7 +89,7 @@ export class DateService {
 	 * Formatting date stamp to be match to datetime-local inputs values
 	 */
 	public getFormattedDate(date: Date = new Date()): string {
-		let localeDateArr = date.toJSON().split('T')[0].split('-');
+		let localeDateArr = [date.getFullYear() + '', date.getMonth() + 1 + '', date.getDate() + ''];
 		let localeTime = date.toLocaleTimeString().slice(0,-3);
 
 		localeDateArr = localeDateArr.map((date) => date.length === 1 ? '0' + date : date);
