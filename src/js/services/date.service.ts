@@ -7,41 +7,36 @@ export class DateService {
 	protected dateUpdated = new Subject<any>();
 
 	public currentDate: Date;
+	public currentMonthDate: Date;
 	public currentDayDateString: string;
 	public currentWeekDates: Date[] = [];
+	public currentMonthDates: Date[] = [];
 	public currentWeekDateStrings: string[] = [];
 	
 	public dateUpdated$ = this.dateUpdated.asObservable();
 
 	constructor() {
 		this.resetDatesToCurrent();
-		this.updateCurrentDateString();
-		this.updateCurrentWeekDateStrings();
 	}
 
 	public goToNextDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() + 1);
+		this.currentMonthDate.setMonth(this.currentMonthDate.getMonth() + 1);
 		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() + 7));
-
-		this.updateCurrentDateString();
-		this.updateCurrentWeekDateStrings();
-		this.announceDateUpdated();
+		this.updateMonthMonthDates();
+		this.updateDateStrings();
 	}
 
 	public goToPrevDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() - 1);
 		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() - 7));
+		//this.currentMonthDates.forEach((date: Date, i: number) => date.setMonth(date.getMonth() - 1));
 
-		this.updateCurrentDateString();
-		this.updateCurrentWeekDateStrings();
-		this.announceDateUpdated();
+		this.updateDateStrings();
 	}
 
 	public goToCurrentDate(): void {
 		this.resetDatesToCurrent();
-		this.updateCurrentDateString();
-		this.updateCurrentWeekDateStrings();
-		this.announceDateUpdated();
 	}
 	
 	public getDefaultsDates(): string[] {
@@ -73,46 +68,69 @@ export class DateService {
 		return `${localeDate}T${localeTime}`;
 	}
 
-	protected resetDatesToCurrent(): void {
+	public resetDatesToCurrent(): void {
 		this.currentDate = new Date();
-		this.createDefaultWeekDates();
+		this.setDefaultMonthDates();
+		this.setDefaultWeekDates();
+		this.updateDateStrings();
+	}
+
+	protected updateDateStrings(): void {
+		this.currentWeekDateStrings = this.currentWeekDates.map((date: Date) => this.getFormattedDate(date).split('T')[0]);
+
+		[this.currentDayDateString] = this.getFormattedDate(this.currentDate).split('T');
+
+		this.announceDateUpdated();
 	}
 
 	protected announceDateUpdated(): void {
 		this.dateUpdated.next({});
 	}
 
-	protected updateCurrentDateString(): void {
-		[this.currentDayDateString] = this.getFormattedDate(this.currentDate).split('T');
-	}
-
-	protected createDefaultWeekDates(): void {
+	protected setDefaultWeekDates(): void {
 		let date = new Date();
-		let day = date.getDay();
-		let weekDates = [];
+		let result = [];
 
-		weekDates.push(date);
-
-		for (let i = day, k = 1; i < 7; i++, k++) {
-			let nextDate = new Date();
-
-			nextDate.setDate(nextDate.getDate() + k);
-
-			weekDates.push(nextDate);
+		while (date.getDay() !== 0) {
+			date.setDate(date.getDate() -1);
 		}
 
-		for (let i = day, k = 1; i > 1; i--, k++) {
-			let prevDate = new Date();
+		for (let i = 0; i < 7; i++) {
+			let newDate = new Date(date.toString());
 
-			prevDate.setDate(prevDate.getDate() - k);
+			newDate.setDate(date.getDate() + i);
 
-			weekDates.push(prevDate);
+			result.push(newDate);
 		}
-		
-		this.currentWeekDates = _.sortBy(weekDates, (date: Date) => date.getDay());
+
+		this.currentWeekDates = result;
 	}
 
-	protected updateCurrentWeekDateStrings(): void {
-		this.currentWeekDateStrings = this.currentWeekDates.map((date: Date) => this.getFormattedDate(date).split('T')[0]);
+	protected setDefaultMonthDates() {
+		this.currentMonthDate = new Date();
+		this.updateMonthMonthDates();
+	}
+
+	protected updateMonthMonthDates(): void {
+		let date = new Date(this.currentMonthDate.toString());
+		let result = [];
+
+		date.setDate(1);
+
+		while (date.getDay() !== 0) {
+			date.setDate(date.getDate() - 1);
+		}
+
+		while (this.currentMonthDate.getMonth() !== date.getMonth()) {
+			result.push({});
+			date.setDate(date.getDate() + 1);
+		}
+
+		while (this.currentMonthDate.getMonth() === date.getMonth()) {
+			result.push(new Date(date.toString()));
+			date.setDate(date.getDate() + 1);
+		}
+
+		this.currentMonthDates = result;
 	}
 }

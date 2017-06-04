@@ -2,9 +2,16 @@
      [ngClass]="['day-title']">{{currentDate.toDateString()}}</div>
 
 <div *ngIf="currentTab.name == 'week'"
-     [ngClass]="['week-title']">
+           [ngClass]="['week-title']">
 
 	<div [class.active]="date.toDateString() === todayDate.toDateString()"
 	     *ngFor="let date of currentWeekDates"
 	     [ngClass]="['title-week-day']">{{date.toDateString()}}</div>
+</div>
+
+<div *ngIf="currentTab.name == 'month'"
+     [ngClass]="['month-title']">
+
+	<div *ngFor="let day of weekDayNames"
+	     [ngClass]="['title-month-day']">{{day}}</div>
 </div>

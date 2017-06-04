@@ -5,12 +5,12 @@ import { IPosition } from '../interfaces/position.interface'
 
 @Injectable()
 export class RemindersAlignmentService {
-	
+
 	public calculateRemindersAlignment(reminders: ReminderModel[]): ReminderModel[] {
 		let sortedModels = _.sortBy(reminders, 'startTime');
 
 		sortedModels.forEach(this.calculateReminderAlignment.bind(this));
-		
+
 		return sortedModels;
 	}
 
@@ -30,7 +30,9 @@ export class RemindersAlignmentService {
 		let modelsWithWidth = _.filter(crossDatedModels, (model) => !!model.width);
 
 		if (!modelsWithWidth.length) {
-			this.calculateEqualAlignment(crossDatedModels, reminder);
+			let childReminders = this.findRemindersCrossedByDate(sortedModels, index + 1);
+
+			this.calculateEqualAlignment(reminder, childReminders);
 		} else {
 			this.calculateDifferentAlignment(crossDatedModels, modelsWithWidth, reminder);
 		}
@@ -53,14 +55,14 @@ export class RemindersAlignmentService {
 		return crossedByDateModels;
 	}
 
-	protected calculateEqualAlignment(models: ReminderModel[], currentModel:  ReminderModel): void {
+	protected calculateEqualAlignment(currentModel:  ReminderModel, childReminders: ReminderModel[]): void {
 		let offset = 0;
-		let knownWidth = 100 / (models.length + 1);
+		let knownWidth = 100 / (childReminders.length + 1);
 
 		currentModel.setWidthAndOffset(knownWidth, offset);
 		offset += knownWidth;
 
-		models.map((model: ReminderModel) => {
+		childReminders.map((model: ReminderModel) => {
 			model.setWidthAndOffset(knownWidth, offset);
 			offset += knownWidth;
 
@@ -152,7 +154,7 @@ export class RemindersAlignmentService {
 
 			occupiedPosition.push(position);
 		});
-		
+
 		return occupiedPosition;
 	}
 }

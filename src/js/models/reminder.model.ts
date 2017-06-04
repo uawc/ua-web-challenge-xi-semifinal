@@ -10,6 +10,8 @@ export class ReminderModel {
 	startTime: string;
 	endTime: string;
 	positionTop: number;
+	initialStartTime: string;
+	initialEndTime: string;
 
 	height: number;
 	offset: number;

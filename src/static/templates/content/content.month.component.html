@@ -1,1 +1,4 @@
-<div>Month</div>
+<monthReminderComponent *ngFor="let date of currentMonthDates"
+                        [class.empty]="!date.toDateString"
+                        [currentDayDate]="date"
+                        [ngClass]="['month-day']"></monthReminderComponent>

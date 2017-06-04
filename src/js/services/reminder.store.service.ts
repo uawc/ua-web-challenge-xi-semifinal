@@ -47,6 +47,8 @@ export class RemindersStoreService {
 		dayReminders = dayReminders.map((el) => {
 			if (el.startDate < date && date < el.endDate) {
 				return new ReminderModel(_.extend(el, {
+					initialStartTime: el.startTime,
+					initialEndTime: el.endTime,
 					startDateString: `${date}T00:00`,
 					endDateString: `${date}T23:59`
 				}));
@@ -54,6 +56,8 @@ export class RemindersStoreService {
 
 			if (el.startDate < date && date === el.endDate) {
 				return new ReminderModel(_.extend(el, {
+					initialStartTime: el.startTime,
+					initialEndTime: el.endTime,
 					startDateString: `${date}T00:00`,
 					endDateString: el.endDateString
 				}));
@@ -61,6 +65,8 @@ export class RemindersStoreService {
 
 			if (el.startDate === date && date < el.endDate) {
 				return new ReminderModel(_.extend(el, {
+					initialStartTime: el.startTime,
+					initialEndTime: el.endTime,
 					startDateString: el.startDateString,
 					endDateString: `${date}T23:59`
 				}));
@@ -74,6 +80,10 @@ export class RemindersStoreService {
 
 	public getReminderByStartDate(startDateString: string): ReminderModel {
 		return _.findWhere(this.allReminders, { startDateString });
+	}
+
+	public getRemindersByStartDate(startDate: string): ReminderModel[] {
+		return _.where(this.allReminders, { startDate });
 	}
 	
 	public getReminderById(id: number): ReminderModel {
@@ -138,18 +148,23 @@ export class RemindersStoreService {
 		let remindersCollection = [];
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T01:00',
-			endDateString: '2017-06-03T03:00'
+			startDateString: '2017-06-04T01:00',
+			endDateString: '2017-06-04T03:00'
 		}));
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T02:00',
-			endDateString: '2017-06-03T03:00'
+			startDateString: '2017-06-04T02:00',
+			endDateString: '2017-06-04T03:00'
 		}));
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T05:00',
-			endDateString: '2017-06-03T08:00'
+			startDateString: '2017-06-04T05:00',
+			endDateString: '2017-06-04T08:00'
+		}));
+
+		remindersCollection.push(new ReminderModel({
+			startDateString: '2017-06-04T05:00',
+			endDateString: '2017-06-04T12:00'
 		}));
 
 		remindersCollection.push(new ReminderModel({
@@ -158,23 +173,18 @@ export class RemindersStoreService {
 		}));
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T05:00',
-			endDateString: '2017-06-03T12:00'
+			startDateString: '2017-06-04T06:00',
+			endDateString: '2017-06-04T08:00'
 		}));
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T06:00',
-			endDateString: '2017-06-03T08:00'
+			startDateString: '2017-06-04T07:30',
+			endDateString: '2017-06-04T09:30'
 		}));
 
 		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T07:30',
-			endDateString: '2017-06-03T09:30'
-		}));
-
-		remindersCollection.push(new ReminderModel({
-			startDateString: '2017-06-03T09:30',
-			endDateString: '2017-06-03T12:00'
+			startDateString: '2017-06-04T09:30',
+			endDateString: '2017-06-04T12:00'
 		}));
 
 		return remindersCollection;

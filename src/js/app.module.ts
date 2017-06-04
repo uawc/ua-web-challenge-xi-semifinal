@@ -6,6 +6,7 @@ import { RemindersStoreService } from './services/reminder.store.service';
 import { RemindersAlignmentService } from './services/reminder.alignment.service';
 import { ReminderEditService } from './services/reminder.edit.service';
 import { NotificationService } from './services/notification.service';
+import { NavigationService } from './services/navigation.service';
 import { DateService } from './services/date.service';
 import { AppComponent }  from './components/app.component';
 
@@ -13,7 +14,7 @@ import { AppComponent }  from './components/app.component';
 	imports: [[BrowserModule, FormsModule]],
 	declarations: [[AppComponent]],
 	bootstrap: [[AppComponent]],
-	providers: [[HTTP_PROVIDERS], [RemindersStoreService], [RemindersAlignmentService], [DateService], [ReminderEditService], [NotificationService]]
+	providers: [[HTTP_PROVIDERS], [RemindersStoreService], [RemindersAlignmentService], [DateService], [ReminderEditService], [NotificationService], [NavigationService]]
 })
 
 export class AppModule {}

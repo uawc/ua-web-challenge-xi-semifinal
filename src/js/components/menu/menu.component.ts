@@ -24,6 +24,8 @@ export class MenuComponent {
 	 */
 	protected onTabChange(tab: ITab): void {
 		this.tabChange.emit(tab);
+		this.reminderEditService.hideReminderEditMenu();
+		this.dateService.resetDatesToCurrent();
 	}
 
 	protected onAddReminderClick(): void {

@@ -14,6 +14,7 @@ export class TitleComponent implements OnInit {
 	protected todayDate = new Date();
 	protected currentDate: Date;
 	protected currentWeekDates: Date[];
+	protected weekDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 	constructor(private dateService: DateService) {}
 
