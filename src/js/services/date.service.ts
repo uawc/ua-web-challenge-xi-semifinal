@@ -8,9 +8,11 @@ export class DateService {
 
 	public currentDate: Date;
 	public currentMonthDate: Date;
+	public currentYearDate: Date;
 	public currentDayDateString: string;
 	public currentWeekDates: Date[] = [];
 	public currentMonthDates: Date[] = [];
+	public currentYearDates: any;
 	public currentWeekDateStrings: string[] = [];
 	
 	public dateUpdated$ = this.dateUpdated.asObservable();
@@ -22,21 +24,30 @@ export class DateService {
 	public goToNextDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() + 1);
 		this.currentMonthDate.setMonth(this.currentMonthDate.getMonth() + 1);
+		this.currentYearDate.setFullYear(this.currentYearDate.getFullYear() + 1);
 		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() + 7));
-		this.updateMonthMonthDates();
+		this.updateMonthDates();
+		this.updateYearDates();
 		this.updateDateStrings();
 	}
 
 	public goToPrevDate(): void {
 		this.currentDate.setDate(this.currentDate.getDate() - 1);
+		this.currentMonthDate.setMonth(this.currentMonthDate.getMonth() - 1);
+		this.currentYearDate.setFullYear(this.currentYearDate.getFullYear() - 1);
 		this.currentWeekDates.forEach((date: Date, i: number) => date.setDate(date.getDate() - 7));
-		//this.currentMonthDates.forEach((date: Date, i: number) => date.setMonth(date.getMonth() - 1));
-
+		this.updateMonthDates();
+		this.updateYearDates();
 		this.updateDateStrings();
 	}
 
-	public goToCurrentDate(): void {
+	public goToDefaultDate(): void {
 		this.resetDatesToCurrent();
+	}
+
+	public goToSpecificDate(date: Date): void {
+		this.currentDate = date;
+		this.updateDateStrings();
 	}
 	
 	public getDefaultsDates(): string[] {
@@ -72,6 +83,7 @@ export class DateService {
 		this.currentDate = new Date();
 		this.setDefaultMonthDates();
 		this.setDefaultWeekDates();
+		this.setDefaultYearDates();
 		this.updateDateStrings();
 	}
 
@@ -108,11 +120,33 @@ export class DateService {
 
 	protected setDefaultMonthDates() {
 		this.currentMonthDate = new Date();
-		this.updateMonthMonthDates();
+		this.updateMonthDates();
 	}
 
-	protected updateMonthMonthDates(): void {
-		let date = new Date(this.currentMonthDate.toString());
+	protected setDefaultYearDates() {
+		this.currentYearDate = new Date();
+		this.updateYearDates();
+	}
+
+	protected updateMonthDates(): void {
+		this.currentMonthDates = this.getMonthDates(this.currentMonthDate);
+	}
+
+	protected updateYearDates(): void {
+		this.currentYearDates = [];
+
+		for (let i = 0; i < 12; i++) {
+			let date = new Date(this.currentYearDate.getFullYear(), i, 1);
+
+			this.currentYearDates.push({
+				name: date.toString().slice(4, -32),
+				dates: this.getMonthDates(date)
+			});
+		}
+	}
+
+	protected getMonthDates(monthDate: Date): Date[] {
+		let date = new Date(monthDate.toString());
 		let result = [];
 
 		date.setDate(1);
@@ -121,16 +155,16 @@ export class DateService {
 			date.setDate(date.getDate() - 1);
 		}
 
-		while (this.currentMonthDate.getMonth() !== date.getMonth()) {
+		while (monthDate.getMonth() !== date.getMonth()) {
 			result.push({});
 			date.setDate(date.getDate() + 1);
 		}
 
-		while (this.currentMonthDate.getMonth() === date.getMonth()) {
+		while (monthDate.getMonth() === date.getMonth()) {
 			result.push(new Date(date.toString()));
 			date.setDate(date.getDate() + 1);
 		}
 
-		this.currentMonthDates = result;
+		return result;
 	}
 }

@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
+import { ITab } from '../interfaces/tab.interface'
 
 @Injectable()
 export class NavigationService {
@@ -8,7 +9,7 @@ export class NavigationService {
 
 	public navigationUpdated$ = this.navigationUpdated.asObservable();
 
-	public navigateToTab(tab: string): void {
+	public navigateToTab(tab: ITab): void {
 		this.navigationUpdated.next(tab);
 	}
 }

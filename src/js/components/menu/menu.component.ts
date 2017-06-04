@@ -1,7 +1,8 @@
 import { ITab } from '../../interfaces/tab.interface';
 import { NAVIGATION_TABS } from '../../data/navigation.data';
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReminderEditService } from '../../services/reminder.edit.service';
+import { NavigationService } from '../../services/navigation.service';
 import { DateService } from '../../services/date.service';
 
 @Component({
@@ -13,17 +14,17 @@ import { DateService } from '../../services/date.service';
 export class MenuComponent {
 	protected tabs: ITab[] = NAVIGATION_TABS;
 
-	@Input()  currentTab: string;
-	@Output() tabChange = new EventEmitter();
-	@Output() toggleEditReminderMenu = new EventEmitter();
+	@Input() currentTab: string;
 
-	constructor(private reminderEditService: ReminderEditService, private dateService: DateService) {}
+	constructor(private dateService: DateService,
+	            private navigationService: NavigationService, 
+	            private reminderEditService: ReminderEditService) {}
 
 	/**
 	 * Emitting to parent that navigation tab has been changed
 	 */
 	protected onTabChange(tab: ITab): void {
-		this.tabChange.emit(tab);
+		this.navigationService.navigateToTab(tab);
 		this.reminderEditService.hideReminderEditMenu();
 		this.dateService.resetDatesToCurrent();
 	}
@@ -40,7 +41,7 @@ export class MenuComponent {
 		this.dateService.goToPrevDate();
 	}
 
-	protected onCurrentDateClick(): void {
-		this.dateService.goToCurrentDate();
+	protected onDefaultDateClick(): void {
+		this.dateService.goToDefaultDate();
 	}
 }

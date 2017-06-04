@@ -1,6 +1,10 @@
 <div *ngIf="currentDayDate.toDateString"
-	 [class.active]="currentDayDate.toDateString() === todayDate.toDateString()"
-     [ngClass]="['month-day-number']">{{currentDayDate.toString().slice(4, -29)}}</div>
+	 [ngClass]="['month-day']">
 
-<div *ngIf="currentDayDate.toDateString && remindersAmount"
-     [ngClass]="['month-day-reminders-amount']">{{remindersAmount}} reminder(s)</div>
+	<div [class.active]="currentDayDate.toDateString() === todayDate.toDateString()"
+	     [ngClass]="['month-day__number']">{{currentDayDate.toString().slice(4, -29)}}</div>
+
+	<div *ngIf="remindersAmount"
+	     (click)="onReminderClick()"
+	     [ngClass]="['month-day__reminders-amount']">{{remindersAmount}} reminder(s)</div>
+</div>

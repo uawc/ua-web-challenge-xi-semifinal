@@ -1,0 +1,55 @@
+:host {
+  overflow: auto;
+  display: block;
+  min-width: 1200px;
+  padding: 20px 0;
+}
+
+.month-compact {
+  width: 270px;
+  height: 270px;
+  display: block;
+  float: left;
+  margin-left: 30px;
+  margin-bottom: 25px;
+}
+
+.month-compact__month-title {
+  margin-bottom: 12px;
+  color: #ff5f5f;
+  font-size: 22px;
+  text-align: center;
+}
+
+.month-compact__day-name {
+  margin-bottom: 10px;
+  background: #fff;
+  display: block;
+  float: left;
+  width: 38px;
+  text-align: center;
+  font-size: 10px;
+  color: #848484;
+}
+
+.month-compact__day-number {
+  padding: 14px 0;
+  background: #fff;
+  display: block;
+  float: left;
+  width: 38px;
+  text-align: center;
+  font-size: 10px;
+  color: #848484;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.active {
+    background: #ff5f5f;
+    border-radius: 25px;
+    color: #fff;
+  }
+}

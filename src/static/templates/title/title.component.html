@@ -15,3 +15,6 @@
 	<div *ngFor="let day of weekDayNames"
 	     [ngClass]="['title-month-day']">{{day}}</div>
 </div>
+
+<div *ngIf="currentTab.name == 'year'"
+     [ngClass]="['year-title']">{{currentYearDate.getFullYear()}}</div>

@@ -6,6 +6,7 @@ import { ContentComponent } from './content/content.component';
 import { EditReminderComponent } from './reminder/edit.reminder.component';
 import { ReminderEditService } from '../services/reminder.edit.service';
 import { NotificationService } from '../services/notification.service';
+import { NavigationService } from '../services/navigation.service';
 import { Component, OnInit } from '@angular/core';
 import { ReminderModel } from '../models/reminder.model';
 
@@ -21,9 +22,12 @@ export class AppComponent implements OnInit  {
 	protected activeReminder: ReminderModel;
 	protected isShowEditReminderMenu = false;
 
-	constructor(private reminderEditService: ReminderEditService, private notificationService: NotificationService) {}
+	constructor(private reminderEditService: ReminderEditService, 
+	            private notificationService: NotificationService, 
+	            private navigationService: NavigationService) {}
 
 	public ngOnInit(): void {
+		this.navigationService.navigationUpdated$.subscribe(this.onTabChange.bind(this));
 		this.reminderEditService.showReminderEditMenu$.subscribe(this.showReminderEditMenu.bind(this));
 		this.reminderEditService.hideReminderEditMenu$.subscribe(this.hideReminderEditMenu.bind(this));
 	}

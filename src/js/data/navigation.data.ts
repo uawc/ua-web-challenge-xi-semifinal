@@ -14,9 +14,5 @@ export const NAVIGATION_TABS = [
 	{
 		name: 'year',
 		title: "Year"
-	},
-	{
-		name: 'agenda',
-		title: "Agenda"
 	}
 ];
