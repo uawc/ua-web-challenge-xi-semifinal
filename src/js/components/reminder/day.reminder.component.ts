@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReminderModel } from '../../models/reminder.model';
+import { ReminderEditService } from '../../services/reminder.edit.service';
 import { RemindersStoreService } from '../../services/reminder.store.service';
 import { RemindersAlignmentService } from '../../services/reminder.alignment.service';
-import { ReminderEditService } from '../../services/reminder.edit.service';
 
 @Component({
-	selector: 'dayReminderComponent',
-	templateUrl: './templates/reminder/day.reminder.component.html',
-	styleUrls: ['./css/reminder/day.reminder.component.css']
+	selector: 'day-reminder',
+	styleUrls: ['./css/reminder/day.reminder.component.css'],
+	templateUrl: './templates/reminder/day.reminder.component.html'
 })
 
 export class DayReminderComponent implements OnInit {
@@ -20,6 +20,9 @@ export class DayReminderComponent implements OnInit {
 	            private remindersStoreService: RemindersStoreService,
 				private remindersAlignmentService: RemindersAlignmentService) {}
 
+	/**
+	 * Updating reminder collection and subscribing on events on component's ngOnInit
+	 */
 	public ngOnInit(): void {
 		this.updateRemindersCollection();
 
@@ -28,20 +31,32 @@ export class DayReminderComponent implements OnInit {
 		this.remindersStoreService.remindersUpdated$.subscribe(this.updateRemindersCollection.bind(this));
 	}
 
+	/**
+	 * Updating reminder collection on currentDayDateString changing
+	 */
 	public ngOnChanges(): void {
 		this.updateRemindersCollection();
 	}
 
+	/**
+	 * Updating reminder collection and calculation reminders alignment
+	 */
 	protected updateRemindersCollection(): void {
 		let eventsPerDay = this.remindersStoreService.getRemindersPerDay(this.currentDayDateString);
 		
 		this.remindersCollection = this.remindersAlignmentService.calculateRemindersAlignment(eventsPerDay);
 	}
-	
+
+	/**
+	 * Updating active reminder
+	 */
 	protected updateActiveReminder(reminder: ReminderModel): void {
 		this.activeReminder = reminder;
 	}
 
+	/**
+	 * show edit menu on reminder clicking
+	 */
 	protected onReminderClick(reminder: ReminderModel): void {
 		let activeReminder = this.remindersStoreService.getReminderById(reminder.id);
 

@@ -1,5 +1,5 @@
 export interface IPosition {
-	startPosition: number,
+	width?: number,
 	endPosition: number,
-	width?: number
+	startPosition: number,
 }

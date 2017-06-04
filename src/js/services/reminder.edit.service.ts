@@ -10,11 +10,17 @@ export class ReminderEditService {
 
 	public showReminderEditMenu$ = this.showReminderMenu.asObservable();
 	public hideReminderEditMenu$ = this.hideReminderMenu.asObservable();
-	
+
+	/**
+	 * Notifying subscribers that edit menu is shown
+	 */
 	public showReminderEditMenu(reminder?: ReminderModel): void {
 		this.showReminderMenu.next(reminder || null);
 	}
 
+	/**
+	 * Notifying subscribers that edit menu is hidden
+	 */
 	public hideReminderEditMenu(): void {
 		this.hideReminderMenu.next(null);
 	}

@@ -1,13 +1,17 @@
 <div *ngFor="let month of currentYearDates"
-     [ngClass]="['month-compact']">
+     [ngClass]="['month']">
 
-	<div class="month-compact__month-title">{{month.name}}</div>
+	<div class="month__month-title">{{month.name}}</div>
+
 	<div *ngFor="let name of weekDayNames"
-	     [ngClass]="['month-compact__day-name']">{{name}}</div>
+	     [ngClass]="['month__day-name']">
+		{{name}}
+	</div>
 
 	<div *ngFor="let date of month.dates"
 	     (click)="onDateClick(date)"
 	     [class.active]="date.toDateString && date.toDateString() === todayDate.toDateString()"
-	     [ngClass]="['month-compact__day-number']">{{date.toString().slice(8, -29)}}</div>
-
+	     [ngClass]="['month__day-number']">
+		{{date.toString().slice(8, -29)}}
+	</div>
 </div>

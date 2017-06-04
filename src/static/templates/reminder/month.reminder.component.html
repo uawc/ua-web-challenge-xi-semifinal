@@ -2,9 +2,13 @@
 	 [ngClass]="['month-day']">
 
 	<div [class.active]="currentDayDate.toDateString() === todayDate.toDateString()"
-	     [ngClass]="['month-day__number']">{{currentDayDate.toString().slice(4, -29)}}</div>
+	     [ngClass]="['month-day__number']">
+		{{currentDayDate.toString().slice(4, -29)}}
+	</div>
 
 	<div *ngIf="remindersAmount"
 	     (click)="onReminderClick()"
-	     [ngClass]="['month-day__reminders-amount']">{{remindersAmount}} reminder(s)</div>
+	     [ngClass]="['month-day__reminders-amount']">
+		{{remindersAmount}} reminder(s)
+	</div>
 </div>

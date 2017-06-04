@@ -3,23 +3,20 @@ import * as _ from 'underscore';
 export class ReminderModel {
 	id: number;
 	title: string;
-	endDate: string;
-	startDateString: string;
-	endDateString: string;
-	startDate: string;
-	startTime: string;
-	endTime: string;
-	positionTop: number;
-	initialStartTime: string;
-	initialEndTime: string;
-
+	width: number;
 	height: number;
 	offset: number;
-	width: number;
+	endDate: string;
+	endTime: string;
+	startDate: string;
+	startTime: string;
+	positionTop: number;
+	endDateString: string;
+	startDateString: string;
 
 	ITEM_HEIGHT = 31;
 
-	constructor(options: any) {
+	constructor(options) {
 		_.extend(this, options);
 
 		this.splitDate();
@@ -27,17 +24,43 @@ export class ReminderModel {
 		this.updatePosition();
 		this.updateHeight();
 	}
-	
-	splitDate(): void {
+
+	/**
+	 * Setting model's width and offset
+	 */
+	public setWidthAndOffset(width: number, offset: number): void {
+		this.width = width;
+		this.offset = offset;
+	}
+
+	/**
+	 * Resetting models values to default
+	 */
+	protected resetToDefault(): void {
+		this.height = 0;
+		this.offset = 0;
+		this.width = 0;
+	}
+
+	/**
+	 * Splitting dates from date string
+	 */
+	protected splitDate(): void {
 		[this.startDate, this.startTime] = this.startDateString.split('T');
 		[this.endDate, this.endTime] = this.endDateString.split('T');
 	}
 
-	updatePosition(): void {
+	/**
+	 * Updating reminder top position
+	 */
+	protected updatePosition(): void {
 		this.positionTop = this.getPositionTop();
 	}
 
-	getPositionEnd(): number {
+	/**
+	 * Calculating reminder bottom position
+	 */
+	protected getPositionEnd(): number {
 		let [hours, minutes] = this.endTime.split(':');
 
 		let hoursPosition = +hours * this.ITEM_HEIGHT;
@@ -46,7 +69,10 @@ export class ReminderModel {
 		return hoursPosition + minutesPosition;
 	}
 
-	getPositionTop(): number {
+	/**
+	 * Calculating reminder top position
+	 */
+	protected getPositionTop(): number {
 		let [hours, minutes] = this.startTime.split(':');
 
 		let hoursPosition = +hours * this.ITEM_HEIGHT;
@@ -55,21 +81,13 @@ export class ReminderModel {
 		return hoursPosition + minutesPosition;
 	}
 
-	updateHeight(): void {
+	/**
+	 * Updating reminder height
+	 */
+	protected updateHeight(): void {
 		let positionTop = this.getPositionTop();
 		let positionEnd = this.getPositionEnd();
 
 		this.height = positionEnd - positionTop;
-	}
-
-	resetToDefault(): void {
-		this.height = 0;
-		this.offset = 0;
-		this.width = 0;
-	}
-	
-	public setWidthAndOffset(width: number, offset: number): void {
-		this.width = width;
-		this.offset = offset;
 	}
 }

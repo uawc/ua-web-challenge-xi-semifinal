@@ -1,29 +1,37 @@
 import 'rxjs/add/operator/toPromise';
-import { RemindersStoreService } from './reminder.store.service'
-import { DateService } from './date.service'
 import { Injectable } from '@angular/core';
+import { DateService } from './date.service';
+import { RemindersStoreService } from './reminder.store.service';
 
+/**
+ * Instead of Notification API d.ts
+ */
 declare var Notification: any;
 
 @Injectable()
 export class NotificationService {
 
-	constructor(protected remindersStoreService: RemindersStoreService, private dateService: DateService) {
+	constructor(private dateService: DateService,
+	            private remindersStoreService: RemindersStoreService) {
+
 		switch (Notification.permission.toLowerCase()) {
-			case 'granted':
+			case 'default':
 				this.requestPermission();
-				break;
-			case 'denied':
-				console.error('Notification is not allowed! Hence, notification feature is disabled.');
 				break;
 			case 'granted':
 				this.startReminderChecker();
+				break;
+			case 'denied':
+				console.error('Notification is not allowed! Hence, notification feature is disabled.');
 				break;
 			default:
 				break;
 		}
 	}
 
+	/**
+	 * Requesting permission for notification
+	 */
 	protected requestPermission(): void {
 		Notification.requestPermission((permission: string) => {
 			if (permission === 'granted') {
@@ -32,10 +40,16 @@ export class NotificationService {
 		});
 	}
 
+	/**
+	 * Sending notification to browser
+	 */
 	protected notify(title, body): void {
 		new Notification(title, { body });
 	}
 
+	/**
+	 * Checking each second for minute changing and in case of true checking whether reminder exists for this date or not
+	 */
 	protected startReminderChecker(): void {
 		let initialDate = new Date();
 

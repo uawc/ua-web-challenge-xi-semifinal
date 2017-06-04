@@ -3,7 +3,7 @@
 	<ul [ngClass]="['navigation-tabs']">
 		<li *ngFor="let tab of tabs"
 		    [class.active]="tab === currentTab"
-		    (click)="onTabChange(tab)">
+		    (click)="onTabClick(tab)">
 			{{tab.title}}
 		</li>
 	</ul>

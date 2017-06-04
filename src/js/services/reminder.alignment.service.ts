@@ -6,6 +6,9 @@ import { IPosition } from '../interfaces/position.interface'
 @Injectable()
 export class RemindersAlignmentService {
 
+	/**
+	 * Calculating alignment for reminders array
+	 */
 	public calculateRemindersAlignment(reminders: ReminderModel[]): ReminderModel[] {
 		let sortedModels = _.sortBy(reminders, 'startTime');
 
@@ -14,6 +17,9 @@ export class RemindersAlignmentService {
 		return sortedModels;
 	}
 
+	/**
+	 * Calculating alignment for particular reminder
+	 */
 	protected calculateReminderAlignment(reminder: ReminderModel, index: number, sortedModels: ReminderModel[]): void {
 		if (reminder.width) {
 			return;
@@ -38,6 +44,9 @@ export class RemindersAlignmentService {
 		}
 	}
 
+	/**
+	 * Finding reminders with crossed dates
+	 */
 	protected findRemindersCrossedByDate(models: ReminderModel[], modelId: number): ReminderModel[] {
 		let crossedByDateModels = [];
 
@@ -55,6 +64,9 @@ export class RemindersAlignmentService {
 		return crossedByDateModels;
 	}
 
+	/**
+	 * Calculating equal alignment for reminders without width 
+	 */
 	protected calculateEqualAlignment(currentModel:  ReminderModel, childReminders: ReminderModel[]): void {
 		let offset = 0;
 		let knownWidth = 100 / (childReminders.length + 1);
@@ -70,6 +82,9 @@ export class RemindersAlignmentService {
 		});
 	}
 
+	/**
+	 * Calculating different alignment for reminders with width
+	 */
 	protected calculateDifferentAlignment(models: ReminderModel[], modelsWithWidth: ReminderModel[], currentModel:  ReminderModel): void {
 		let availablePosition = this.getBiggerAvailablePosition(modelsWithWidth);
 		let offset = availablePosition.startPosition;
@@ -88,6 +103,9 @@ export class RemindersAlignmentService {
 		});
 	}
 
+	/**
+	 * Finding bigger available position
+	 */
 	protected getBiggerAvailablePosition(models: ReminderModel[]): IPosition {
 		let occupiedPositions = this.getOccupiedPositions(models);
 		let availablePositions = this.getAvailablePositions(occupiedPositions);
@@ -96,6 +114,9 @@ export class RemindersAlignmentService {
 
 	}
 
+	/**
+	 * Finding all available positions
+	 */
 	protected getAvailablePositions(positions: IPosition[]): IPosition[] {
 		let availablePosition = [];
 		let currentPosition = 0;
@@ -127,6 +148,9 @@ export class RemindersAlignmentService {
 		return availablePosition;
 	}
 
+	/**
+	 * Finding all occupied positions
+	 */
 	protected getOccupiedPositions(models: ReminderModel[]): IPosition[] {
 		let sortedModels = _.sortBy(models, 'offset');
 
